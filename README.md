@@ -5,8 +5,8 @@ Septima is a lightweight, highly adaptable AI tutoring web application designed 
 
 The AI tutor interface is presented to the student under the persona of **Ms. Clark**.
 
-## The Inspiration: Septima Clark
-This service is named in honor of Septima Poinsette Clark (1898–1987), a pioneering American educator and civil rights activist often referred to as the "Queen mother" of the Civil Rights Movement. Her lifelong dedication to adult education, literacy, and community empowerment was built on a deep respect for her students. She believed that true teaching required treating the student as an equal partner in the learning process—a philosophy that serves as the core directive for this AI.
+## Septima Clark
+This service is named after [Septima Poinsette Clark](https://en.wikipedia.org/wiki/Septima_Poinsette_Clark), a pioneering American educator and civil rights activist often referred to as the "Queen mother" of the Civil Rights Movement. Her lifelong dedication to adult education, literacy, and community empowerment was built on a deep respect for her students. She believed that true teaching required treating the student as an equal partner in the learning process—a philosophy that serves as the core directive for this AI.
 
 ## Primary Goals
 - Provide a structured, patient teaching experience that guides students to answers rather than just providing them.
