@@ -1,0 +1,10 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    name = "frontend",
+    srcs = glob(["*.ts"]),
+    declaration = True,
+    transpiler = "tsc",
+    tsconfig = "tsconfig.json",
+    visibility = ["//visibility:public"],
+)

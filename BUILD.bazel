@@ -1,0 +1,57 @@
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
+load("@npm_rulesjs//:defs.bzl", "npm_link_all_packages")
+load("@npm_rulesjs//:eslint/package_json.bzl", eslint_bin = "bin")
+load("@npm_rulesjs//:prettier/package_json.bzl", prettier_bin = "bin")
+
+package(default_visibility = ["//visibility:public"])
+
+npm_link_all_packages(name = "node_modules")
+
+exports_files([
+    ".editorconfig",
+    ".prettierrc",
+    ".prettierignore",
+    "eslint.config.mjs",
+    "package.json",
+])
+
+js_library(
+    name = "eslint_config",
+    srcs = ["eslint.config.mjs"],
+)
+
+js_library(
+    name = "prettier_config",
+    srcs = [
+        ".prettierignore",
+        ".prettierrc",
+    ],
+)
+
+prettier_bin.prettier_binary(
+    name = "prettier",
+    data = [":prettier_config"],
+    env = {"BAZEL_BINDIR": "."},
+)
+
+eslint_bin.eslint_binary(
+    name = "eslint",
+    data = [
+        ":eslint_config",
+        "//:node_modules/@eslint/js",
+        "//:node_modules/typescript-eslint",
+    ],
+    env = {"BAZEL_BINDIR": "."},
+    fixed_args = ["--no-error-on-unmatched-pattern"],
+)
+
+alias(
+    name = "ktlint_jar_alias",
+    actual = "@ktlint_jar//jar",
+)
+
+alias(
+    name = "format",
+    actual = "//tools/format:format",
+)

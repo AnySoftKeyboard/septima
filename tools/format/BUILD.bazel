@@ -1,0 +1,19 @@
+load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
+
+package(default_visibility = ["//visibility:public"])
+
+# Using the ktlint jar
+sh_binary(
+    name = "ktlint_format",
+    srcs = ["ktlint_wrapper.sh"],
+    args = ["$(location @ktlint_jar//jar)"],
+    data = ["@ktlint_jar//jar"],
+)
+
+format_multirun(
+    name = "format",
+    javascript = "//:prettier",
+    kotlin = ":ktlint_format",
+    markdown = "//:prettier",
+    starlark = "@buildifier_prebuilt//:buildifier",
+)

@@ -1,0 +1,33 @@
+load("@npm_rulesjs//:eslint/package_json.bzl", eslint_bin = "bin")
+load("@npm_rulesjs//:prettier/package_json.bzl", prettier_bin = "bin")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "baseline.xml",
+    "ktlint_run.sh",
+    "eslint_run.sh",
+])
+
+eslint_bin.eslint_binary(
+    name = "eslint",
+    data = [
+        "//:eslint_config",
+        "//:node_modules/@eslint/js",
+        "//:node_modules/typescript-eslint",
+    ],
+    env = {"BAZEL_BINDIR": "."},
+    fixed_args = ["--no-error-on-unmatched-pattern"],
+)
+
+prettier_bin.prettier_binary(
+    name = "prettier",
+    data = ["//:prettier_config"],
+    env = {"BAZEL_BINDIR": "."},
+)
+
+sh_binary(
+    name = "ktlint_sh_binary",
+    srcs = ["ktlint_run.sh"],
+    data = ["@ktlint_jar//jar"],
+)
