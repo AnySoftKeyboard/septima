@@ -34,4 +34,4 @@ _Read the specific DESIGN docs for deep implementation details._
 3. **Build Files:** Always update `BUILD.bazel` when modifying dependencies or adding new files.
 4. **Testing:** Write or update tests (`Jest` for frontend, `JUnit5` for backend).
 5. **Formatting & Linting (CRITICAL):** Do NOT waste output tokens trying to manually adhere to perfect code formatting or linting rules. This repository uses automated tools (`Prettier`, `ESLint`, `Ktlint`). Write logically sound code and explicitly instruct the user to run the respective Bazel format/lint targets to clean up the syntax.
-6.
+6. **Pre-Commit Check:** `bazel run //:format` MUST be invoked before any commit to ensure repository consistency.
