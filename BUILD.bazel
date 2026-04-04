@@ -18,16 +18,23 @@ exports_files([
 
 # copy_to_bin targets to expose configuration files to the output tree
 copy_to_bin(
+    name = "editorconfig_bin",
+    srcs = [".editorconfig"],
+)
+
+copy_to_bin(
     name = "eslint_config_bin",
     srcs = ["eslint.config.mjs"],
 )
 
 copy_to_bin(
     name = "prettier_config_bin",
-    srcs = [
-        ".prettierignore",
-        ".prettierrc",
-    ],
+    srcs = [".prettierrc"],
+)
+
+copy_to_bin(
+    name = "prettier_ignore_bin",
+    srcs = [".prettierignore"],
 )
 
 js_library(
@@ -37,12 +44,23 @@ js_library(
 
 js_library(
     name = "prettier_config",
-    srcs = [":prettier_config_bin"],
+    srcs = [
+        ":prettier_config_bin",
+        ":prettier_ignore_bin",
+    ],
 )
 
 prettier_bin.prettier_binary(
     name = "prettier",
-    data = [":prettier_config"],
+    args = [
+        "--config=$(rootpath :prettier_config_bin)",
+        "--ignore-path=$(rootpath :prettier_ignore_bin)",
+        "--ignore-unknown",
+    ],
+    data = [
+        ":prettier_config_bin",
+        ":prettier_ignore_bin",
+    ],
     env = {"BAZEL_BINDIR": "."},
 )
 

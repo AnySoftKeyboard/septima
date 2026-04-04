@@ -20,7 +20,7 @@ jobs:
         with:
           provider: 'google'
           model_id: 'gemini-3-flash-preview'
-          provider_api_key: ${{ secrets.GEMINI_API_KEY }}
+          provider_api_key: ${{ secrets.GEMINI_2_5_FLASH_API_KEY }}
           # The base branch to compare against (defaults to main)
           base: ${{ github.event.pull_request.base.sha }}
           # The head branch/commit (defaults to HEAD)

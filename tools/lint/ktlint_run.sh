@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
 # tools/lint/ktlint_run.sh
 
-# The aspect passes the jar via --ruleset if we use ruleset_jar attribute
-# We use this to find the jar in the sandbox
+# Find the ktlint jar
+# 1. From --ruleset flag if provided by aspect
 JAR=""
 args=()
 for arg in "$@"; do
   if [[ "$arg" == --ruleset=* ]]; then
     JAR="${arg#--ruleset=}"
-    # Don't pass --ruleset to ktlint if it's the main jar!
     continue
   fi
   args+=("$arg")
 done
 
+# 2. Hardcoded sandbox path
 if [[ ! -f "$JAR" ]]; then
-  # Fallback: search for it
   JAR=$(find . -name "downloaded.jar" | grep ktlint_jar | head -n 1)
+fi
+
+# 3. Another sandbox path
+if [[ ! -f "$JAR" ]]; then
+  JAR=$(find . -name "ktlint" | grep com_github_pinterest_ktlint | head -n 1)
 fi
 
 if [[ ! -f "$JAR" ]]; then

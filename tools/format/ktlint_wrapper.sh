@@ -1,24 +1,45 @@
 #!/usr/bin/env bash
 # tools/format/ktlint_wrapper.sh
 
-# The first argument is the path to the ktlint binary
-KTLINT="$1"
-shift
+# --- begin runfiles.bash initialization v3 ---
+# Copy-pasted from the Bazel Bash runfiles library v3.
+set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
+source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
+  source "$(grep -sm1 "^$f " "${BAZEL_FREEZE_RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \
+  source "$0.runfiles/$f" 2>/dev/null || \
+  source "$(grep -sm1 "^$f " "$0.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+  source "$(python3 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$0.runfiles/$f")" 2>/dev/null || \
+  { echo>&2 "ERROR: cannot find $f"; exit 1; }
+f=; set +e
+# --- end runfiles.bash initialization v3 ---
 
-# Make KTLINT path absolute before we cd
-if [[ "$KTLINT" != /* ]]; then
-  KTLINT="$PWD/$KTLINT"
+# Try to find the ktlint jar via rlocation
+# We try various possible names for the repository mapping
+JAR=$(rlocation "ktlint_jar/jar/downloaded.jar")
+
+if [[ ! -f "$JAR" ]]; then
+  JAR=$(rlocation "_main/external/ktlint_jar/jar/downloaded.jar")
 fi
 
-# Filter args
+if [[ ! -f "$JAR" ]]; then
+  # Try to find it in runfiles directory
+  JAR=$(find "$0.runfiles" -name "downloaded.jar" | grep ktlint_jar | head -n 1)
+fi
+
+if [[ ! -f "$JAR" ]]; then
+  echo >&2 "ERROR: ktlint jar not found"
+  # find "$0.runfiles" -maxdepth 10
+  exit 1
+fi
+
+# Filter args - format_multirun might pass things we need to ignore
 args=()
-has_check=0
 for arg in "$@"; do
-  if [[ "$arg" == "--set-exit-if-changed" ]] || [[ "$arg" == "--dry-run" ]]; then
-    has_check=1
+  # Skip the first arg if it's the one we passed in BUILD.bazel (DUMMY_JAR_PATH)
+  if [[ "$arg" == "DUMMY_JAR_PATH" ]]; then
     continue
   fi
-  if [[ "$arg" == node_modules/* ]] || [[ "$arg" == bazel-* ]]; then
+  if [[ "$arg" == "--set-exit-if-changed" ]] || [[ "$arg" == "--dry-run" ]]; then
     continue
   fi
   args+=("$arg")
@@ -28,19 +49,10 @@ if [ ${#args[@]} -eq 0 ]; then
   exit 0
 fi
 
-# Try to find the workspace root
-ROOT="$PWD"
-while [[ "$ROOT" != "/" && ! -f "$ROOT/.bazelversion" ]]; do
-  ROOT="$(dirname "$ROOT")"
-done
-
-if [[ -f "$ROOT/.bazelversion" ]]; then
-  cd "$ROOT"
+# Make sure we are in the workspace root
+if [[ -n "$BUILD_WORKSPACE_DIRECTORY" ]]; then
+  cd "$BUILD_WORKSPACE_DIRECTORY"
 fi
 
-if [ $has_check -eq 1 ]; then
-  exec java -jar "$KTLINT" "${args[@]}"
-else
-  # Use -F for formatting
-  exec java -jar "$KTLINT" -F "${args[@]}"
-fi
+# Run ktlint
+exec java -jar "$JAR" -F "${args[@]}"
