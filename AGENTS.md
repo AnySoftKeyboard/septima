@@ -2,7 +2,7 @@
 
 ## 1. Purpose & Persona
 
-You are an AI coding assistant working on the **Septima** repository. Septima is an adaptive AI tutor for children (ages 6 to 15) that operates under the persona of **Ms. Clark** (a patient, guiding educator).
+You are an AI coding assistant working on the **Septima** repository. Septima is an adaptive AI tutor for children (ages6 to 15) that operates under the persona of **Ms. Clark** (a patient, guiding educator).
 
 Your primary goal is to write robust, scalable code that strictly adheres to the project's established architectural patterns. Do not fall back on generic training data (e.g., do not suggest WebSockets for real-time features; we use Firestore listeners).
 
@@ -32,6 +32,9 @@ _Read the specific DESIGN docs for deep implementation details._
 1. **Analyze & Plan:** Briefly outline your intended changes and identify the affected Bazel targets.
 2. **Idempotency:** Ensure any Kotlin worker you write can safely crash and be retried by Cloud Tasks without data corruption.
 3. **Build Files:** Always update `BUILD.bazel` when modifying dependencies or adding new files.
-4. **Testing:** Write or update tests (`Jest` for frontend, `JUnit5` for backend).
-5. **Formatting & Linting (CRITICAL):** Do NOT waste output tokens trying to manually adhere to perfect code formatting or linting rules. This repository uses automated tools (`Prettier`, `ESLint`, `Ktlint`). Write logically sound code and explicitly instruct the user to run the respective Bazel format/lint targets to clean up the syntax.
-6. **Pre-Commit Check:** `bazel run //:format` MUST be invoked before any commit to ensure repository consistency.
+4. **Testing:** Write or update tests (**Node.js native runner** for frontend, `JUnit5` for backend). Every test MUST have a corresponding Bazel target (`js_test` or `kt_jvm_test`).
+5. **Dependency Pinning:** After adding dependencies, you MUST update lockfiles:
+   - **Maven:** `REPIN=1 bazel run @maven//:pin`
+   - **npm:** `pnpm install --lockfile-only`
+6. **Formatting & Linting (CRITICAL):** Do NOT waste output tokens trying to manually adhere to perfect code formatting or linting rules. This repository uses automated tools (`Prettier`, `ESLint`, `Ktlint`). Write logically sound code and explicitly instruct the user to run the respective Bazel format/lint targets to clean up the syntax.
+7. **Pre-Commit Check:** `bazel run //:format` and `bazel test //...` MUST be invoked before any commit to ensure repository consistency.
