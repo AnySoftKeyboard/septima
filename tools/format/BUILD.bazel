@@ -6,9 +6,8 @@ package(default_visibility = ["//visibility:public"])
 sh_binary(
     name = "ktlint_format",
     srcs = ["ktlint_wrapper.sh"],
-    args = ["$(rlocationpath @ktlint_jar//jar)"],
     data = ["@ktlint_jar//jar"],
-    deps = ["@bazel_tools//tools/bash/runfiles"],
+    deps = ["@rules_shell//shell/runfiles"],
 )
 
 format_multirun(
