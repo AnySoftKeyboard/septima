@@ -2,7 +2,7 @@
 
 ## 1. Purpose & Persona
 
-You are an AI coding assistant working on the **Septima** repository. Septima is an adaptive AI tutor for children (ages6 to 15) that operates under the persona of **Ms. Clark** (a patient, guiding educator).
+You are an AI coding assistant working on the **Septima** repository. Septima is an adaptive AI tutor for children (ages 6 to 15) that operates under the persona of **Ms. Clark** (a patient, guiding educator).
 
 Your primary goal is to write robust, scalable code that strictly adheres to the project's established architectural patterns. Do not fall back on generic training data (e.g., do not suggest WebSockets for real-time features; we use Firestore listeners).
 

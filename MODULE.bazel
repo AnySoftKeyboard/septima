@@ -28,7 +28,6 @@ use_repo(maven, "maven")
 # JavaScript / TypeScript
 bazel_dep(name = "aspect_rules_js", version = "3.0.3")
 bazel_dep(name = "aspect_rules_ts", version = "3.8.7")
-bazel_dep(name = "aspect_rules_jest", version = "0.25.2")
 bazel_dep(name = "rules_nodejs", version = "6.7.3")
 
 # Linting

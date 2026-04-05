@@ -15,11 +15,10 @@ f=; set +e
 
 # Extract flags and files
 files=()
-extra_args=()
-
+ktlint_args=()
 for arg in "$@"; do
   if [[ "$arg" == -* ]]; then
-    extra_args+=("$arg")
+    ktlint_args+=("$arg")
   elif [[ -f "$arg" ]]; then
     files+=("$arg")
   fi
@@ -29,13 +28,12 @@ if [ ${#files[@]} -eq 0 ]; then
   exit 0
 fi
 
-# Try to find the ktlint jar via rlocation
-# The workspace name is 'septima' or '_main' depending on how it's defined
+# Find the ktlint jar in our runfiles or sandbox
 JAR=$(rlocation "ktlint_jar/jar/downloaded.jar")
 
 if [[ ! -f "$JAR" ]]; then
-  # Fallback to direct search if rlocation fails
-  JAR=$(find "$0.runfiles" -name "downloaded.jar" | grep ktlint_jar | head -n 1)
+  # Fallback: search in the current execution tree
+  JAR=$(find . -name "downloaded.jar" | grep ktlint_jar | head -n 1)
 fi
 
 if [[ ! -f "$JAR" ]]; then
