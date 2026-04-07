@@ -1,4 +1,5 @@
 load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
+load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 package(default_visibility = ["//visibility:public"])
@@ -7,16 +8,23 @@ package(default_visibility = ["//visibility:public"])
 sh_binary(
     name = "ktlint_format",
     srcs = ["ktlint_wrapper.sh"],
-    args = ["$(rlocationpath @ktlint_jar//jar)"],
     data = ["@ktlint_jar//jar"],
+    deps = ["@rules_shell//shell/runfiles"],
+)
+
+# Wrapper for prettier to handle symlinks and other quirks
+sh_binary(
+    name = "prettier_format",
+    srcs = ["prettier_wrapper.sh"],
+    data = ["//:prettier"],
     deps = ["@rules_shell//shell/runfiles"],
 )
 
 format_multirun(
     name = "format",
-    javascript = "//:prettier",
+    javascript = ":prettier_format",
     kotlin = ":ktlint_format",
-    markdown = "//:prettier",
+    markdown = ":prettier_format",
     starlark = "@buildifier_prebuilt//:buildifier",
-    yaml = "//:prettier",
+    yaml = ":prettier_format",
 )

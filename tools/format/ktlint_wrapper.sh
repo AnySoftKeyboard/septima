@@ -19,6 +19,9 @@ ktlint_args=()
 for arg in "$@"; do
   if [[ "$arg" == -* ]]; then
     ktlint_args+=("$arg")
+  elif [[ -L "$arg" ]]; then
+    # Skip symlinks
+    continue
   elif [[ -f "$arg" ]]; then
     files+=("$arg")
   fi
