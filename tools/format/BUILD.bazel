@@ -3,23 +3,16 @@ load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
 package(default_visibility = ["//visibility:public"])
 
 java_binary(
-    name = "ktlint",
-    main_class = "com.pinterest.ktlint.Main",
-    runtime_deps = ["@ktlint_jar//jar"],
-)
-
-sh_binary(
-    name = "prettier",
-    srcs = ["prettier.sh"],
-    data = ["//:node_modules/prettier"],
+    name = "ktfmt",
+    main_class = "com.facebook.ktfmt.cli.Main",
+    runtime_deps = ["@ktfmt//jar"],
 )
 
 format_multirun(
     name = "format",
-    javascript = ":prettier",
-    kotlin = ":ktlint",
-    kotlin_fix_args = ["-F"],
-    markdown = ":prettier",
+    javascript = "//tools:prettier_filter_links",
+    kotlin = ":ktfmt",
+    markdown = "//tools:prettier_filter_links",
     starlark = "@buildifier_prebuilt//:buildifier",
-    yaml = ":prettier",
+    yaml = "//tools:prettier_filter_links",
 )
