@@ -7,9 +7,23 @@ module(
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(name = "bazel_lib", version = "3.2.2")
 bazel_dep(name = "rules_java", version = "9.3.0")
+bazel_dep(name = "rules_shell", version = "0.7.1")
 
 # Kotlin
 bazel_dep(name = "rules_kotlin", version = "2.3.20")
+bazel_dep(name = "rules_jvm_external", version = "6.10")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.junit.jupiter:junit-jupiter-api:5.10.2",
+        "org.junit.jupiter:junit-jupiter-engine:5.10.2",
+        "org.junit.platform:junit-platform-launcher:1.10.2",
+        "org.junit.platform:junit-platform-console:1.10.2",
+    ],
+    lock_file = "@@//:maven_install.json",
+)
+use_repo(maven, "maven")
 
 # JavaScript / TypeScript
 bazel_dep(name = "aspect_rules_js", version = "3.0.3")
@@ -17,9 +31,9 @@ bazel_dep(name = "aspect_rules_ts", version = "3.8.7")
 bazel_dep(name = "rules_nodejs", version = "6.7.3")
 
 # Linting
-bazel_dep(name = "aspect_rules_lint", version = "2.3.0")
+bazel_dep(name = "aspect_rules_lint", version = "2.5.0")
 
-bazel_dep(name = "buildifier_prebuilt", version = "8.2.1.1", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 
 # Node.js toolchain setup
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node", dev_dependency = True)
@@ -53,3 +67,7 @@ http_jar(
 lint = use_extension("@aspect_rules_lint//lint:extensions.bzl", "tools")
 lint.ktlint(name = "com_github_pinterest_ktlint")
 use_repo(lint, "com_github_pinterest_ktlint")
+
+format_tools = use_extension("@aspect_rules_lint//format:extensions.bzl", "tools")
+format_tools.ktfmt()
+use_repo(format_tools, "ktfmt")

@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0 # Important: fetch all history for diffing
 
       - name: Run Cassandra AI Review
-        uses: menny/cassandra@main
+        uses: menny/cassandra@c31e5c67624ca33ee7094b567e4d14a96639fe8b
         with:
           provider: 'google'
           model_id: 'gemini-3-flash-preview'
@@ -25,5 +25,3 @@ jobs:
           base: ${{ github.event.pull_request.base.sha }}
           # The head branch/commit (defaults to HEAD)
           head: ${{ github.event.pull_request.head.sha }}
-          # The GitHub token to use for review comments
-          reviewer_github_token: ${{ secrets.REVIEWER_GITHUB_TOKEN }}
