@@ -16,10 +16,27 @@ bazel_dep(name = "rules_jvm_external", version = "6.10")
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
+        # Testing
         "org.junit.jupiter:junit-jupiter-api:5.10.2",
         "org.junit.jupiter:junit-jupiter-engine:5.10.2",
         "org.junit.platform:junit-platform-launcher:1.10.2",
         "org.junit.platform:junit-platform-console:1.10.2",
+        # Ktor server
+        "io.ktor:ktor-server-core-jvm:3.0.3",
+        "io.ktor:ktor-server-netty-jvm:3.0.3",
+        "io.ktor:ktor-server-content-negotiation-jvm:3.0.3",
+        "io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.3",
+        "io.ktor:ktor-server-status-pages-jvm:3.0.3",
+        "io.ktor:ktor-server-call-logging-jvm:3.0.3",
+        # Ktor test utilities (used by backend_test in later PRs)
+        "io.ktor:ktor-server-test-host-jvm:3.0.3",
+        "io.ktor:ktor-client-content-negotiation-jvm:3.0.3",
+        # Kotlinx serialization
+        "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3",
+        # Firebase Admin SDK (token verification)
+        "com.google.firebase:firebase-admin:9.4.1",
+        # Logging
+        "org.slf4j:slf4j-simple:2.0.16",
     ],
     lock_file = "@@//:maven_install.json",
 )

@@ -31,3 +31,72 @@ This service is named after [Septima Poinsette Clark](https://en.wikipedia.org/w
 - **Infrastructure:** Google Cloud Platform (Cloud Run, Cloud Tasks, Cloud Storage)
 - **Database/State:** Google Cloud Firestore (Hybrid Document & Vector Store)
 - **AI Models:** Google Gemini 3.1 ecosystem (Pro, Flash, and Flash-Lite)
+
+## Local Development
+
+Septima is a Bazel-managed polyglot monorepo. **Bazel is the single entry point for all application tooling** — do not run `pnpm dev`, `npm run …`, or `gradle run` directly. Build, test, format, and dev-server targets all live behind `bazel run` / `bazel test`.
+
+### Prerequisites
+
+- **Bazel** — pinned by `.bazelversion`. Use [`bazelisk`](https://github.com/bazelbuild/bazelisk) so the right version is fetched automatically.
+- **JDK 21+** — Bazel uses an embedded JDK for the build itself, but a host JDK is needed for IDE integration (IntelliJ / Kotlin LSP).
+- **Node.js 24+** — Bazel ships its own Node toolchain (`MODULE.bazel`), so a host install is needed only for editor TypeScript support.
+- **pnpm 10+** — used **only** to regenerate `pnpm-lock.yaml`. Never used to install or run app code.
+- **Firebase CLI** (`npm i -g firebase-tools`) — required for the local emulator suite (Firestore + Cloud Storage). Not yet wired up; dev server targets will fail without it once the backend and frontend servers land.
+- **Google Cloud SDK** (`gcloud`) — only needed for production deploys; not required for local dev.
+
+### First-time setup
+
+```sh
+git clone <repo>
+cd septima
+bazel build //...   # warms caches, fetches toolchains
+bazel test //...    # confirms the suite is green
+```
+
+### Everyday commands
+
+| Goal                    | Command                         |
+| ----------------------- | ------------------------------- |
+| Run the full test suite | `bazel test //...`              |
+| Run backend tests only  | `bazel test //backend/...`      |
+| Run frontend tests only | `bazel test //frontend/...`     |
+| Format the entire repo  | `bazel run //:format`           |
+| Build a specific target | `bazel build //backend:backend` |
+
+### Dev servers and emulators
+
+The dev loop runs entirely against the Firebase Emulator Suite to avoid touching production data or incurring cloud costs (see `docs/DESIGN-BUILD.md`).
+
+```sh
+# Terminal 1 — Firestore + Cloud Storage emulators
+firebase emulators:start
+
+# Terminal 2 — Kotlin backend (Ktor on Cloud Run-style port)
+bazel run //backend:dev_server
+
+# Terminal 3 — Vite-powered React frontend
+bazel run //frontend:dev_server
+```
+
+> The `//backend:dev_server` and `//frontend:dev_server` targets are not yet implemented. Until they land, only the test and format targets above are available.
+
+### Updating dependencies
+
+Whenever you change a manifest, regenerate the matching lockfile and commit both files together.
+
+- **Maven (Kotlin):** edit `MODULE.bazel`, then `REPIN=1 bazel run @maven//:pin`.
+- **npm (TypeScript):** edit `package.json`, then `pnpm install --lockfile-only`.
+
+### Environment configuration
+
+Local dev points the Firebase Web SDK at the emulator host (defaults to `127.0.0.1:8080` for Firestore, `127.0.0.1:9199` for Storage). The frontend reads these from `import.meta.env.VITE_*` variables baked in at build time — see `frontend/.env.local.example` once it is added. No production secrets are ever required for local development.
+
+### Pre-commit checklist
+
+CI mirrors these two commands; run them before every commit to keep the tree green:
+
+```sh
+bazel run //:format
+bazel test //...
+```
