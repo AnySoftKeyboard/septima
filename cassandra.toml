@@ -1,0 +1,12 @@
+# Cassandra Configuration for Septima
+provider = "google"
+model = "gemini-3-flash-preview"
+
+# Use general guidelines as the foundation
+main-guidelines = "general"
+
+# Add supplemental guidelines
+supplemental-guidelines = [
+  ".github/ai-reviewer/drive-by-fixes.md",
+  ".github/ai-reviewer/code-reuse.md"
+]
