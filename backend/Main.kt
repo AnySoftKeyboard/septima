@@ -16,13 +16,16 @@ fun main() {
         requireNotNull(System.getenv("GOOGLE_CLOUD_PROJECT")) {
             "GOOGLE_CLOUD_PROJECT env var is required"
         }
-    FirebaseApp.initializeApp(
-        FirebaseOptions.builder()
-            .setCredentials(GoogleCredentials.getApplicationDefault())
-            .setProjectId(projectId)
-            .build(),
-    )
-    embeddedServer(Netty, port = 8080) {
+    if (FirebaseApp.getApps().isEmpty()) {
+        FirebaseApp.initializeApp(
+            FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.getApplicationDefault())
+                .setProjectId(projectId)
+                .build(),
+        )
+    }
+    val port = System.getenv("PORT")?.toInt() ?: 8080
+    embeddedServer(Netty, port = port) {
         configureServer(FirebaseTokenVerifier())
     }.start(wait = true)
 }

@@ -6,12 +6,15 @@ import io.ktor.server.application.ApplicationPlugin
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.response.respond
 import io.ktor.util.AttributeKey
+import org.slf4j.LoggerFactory
 
 val UidKey: AttributeKey<String> = AttributeKey("uid")
 
 class FirebaseAuthConfig {
     lateinit var verifier: TokenVerifier
 }
+
+private val logger = LoggerFactory.getLogger("septima.FirebaseAuthPlugin")
 
 val FirebaseAuthPlugin: ApplicationPlugin<FirebaseAuthConfig> =
     createApplicationPlugin("FirebaseAuth", ::FirebaseAuthConfig) {
@@ -31,7 +34,8 @@ val FirebaseAuthPlugin: ApplicationPlugin<FirebaseAuthConfig> =
             try {
                 val uid = pluginConfig.verifier.verify(token)
                 call.attributes.put(UidKey, uid)
-            } catch (_: Exception) {
+            } catch (e: Exception) {
+                logger.warn("Token verification failed: ${e.message}")
                 call.respond(HttpStatusCode.Unauthorized)
             }
         }
