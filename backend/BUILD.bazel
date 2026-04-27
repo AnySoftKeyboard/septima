@@ -1,9 +1,27 @@
-load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_binary", "kt_jvm_library", "kt_jvm_test")
 
 kt_jvm_library(
     name = "backend",
-    srcs = ["Main.kt"],
+    srcs = glob(
+        ["*.kt"],
+        exclude = ["*Test.kt"],
+    ),
+    resources = ["logback.xml"],
     visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:ch_qos_logback_logback_classic",
+        "@maven//:com_google_firebase_firebase_admin",
+        "@maven//:io_ktor_ktor_server_core_jvm",
+        "@maven//:io_ktor_ktor_server_netty_jvm",
+        "@maven//:net_logstash_logback_logstash_logback_encoder",
+    ],
+)
+
+kt_jvm_binary(
+    name = "dev_server",
+    main_class = "septima.MainKt",
+    visibility = ["//visibility:public"],
+    runtime_deps = [":backend"],
 )
 
 kt_jvm_test(
@@ -15,6 +33,8 @@ kt_jvm_test(
     ],
     main_class = "org.junit.platform.console.ConsoleLauncher",
     deps = [
+        ":backend",
+        "@maven//:io_ktor_ktor_server_test_host_jvm",
         "@maven//:org_junit_jupiter_junit_jupiter_api",
         "@maven//:org_junit_jupiter_junit_jupiter_engine",
         "@maven//:org_junit_platform_junit_platform_console",
