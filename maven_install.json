@@ -1496,9 +1496,7 @@
       "com.google.http-client:google-http-client",
       "com.google.http-client:google-http-client-gson"
     ],
-    "io.grpc:grpc-context": [
-      "io.grpc:grpc-api"
-    ],
+    "io.grpc:grpc-context": ["io.grpc:grpc-api"],
     "io.ktor:ktor-client-apache-jvm": [
       "io.ktor:ktor-client-core-jvm",
       "org.apache.httpcomponents:httpasyncclient",
@@ -1705,9 +1703,7 @@
       "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm",
       "org.slf4j:slf4j-api"
     ],
-    "io.netty:netty-buffer": [
-      "io.netty:netty-common"
-    ],
+    "io.netty:netty-buffer": ["io.netty:netty-common"],
     "io.netty:netty-codec": [
       "io.netty:netty-buffer",
       "io.netty:netty-common",
@@ -1736,9 +1732,7 @@
       "io.netty:netty-transport",
       "io.netty:netty-transport-native-unix-common"
     ],
-    "io.netty:netty-resolver": [
-      "io.netty:netty-common"
-    ],
+    "io.netty:netty-resolver": ["io.netty:netty-common"],
     "io.netty:netty-transport": [
       "io.netty:netty-buffer",
       "io.netty:netty-common",
@@ -1775,16 +1769,12 @@
       "io.netty:netty-common",
       "io.netty:netty-transport"
     ],
-    "io.opencensus:opencensus-api": [
-      "io.grpc:grpc-context"
-    ],
+    "io.opencensus:opencensus-api": ["io.grpc:grpc-context"],
     "io.opencensus:opencensus-contrib-http-util": [
       "com.google.guava:guava",
       "io.opencensus:opencensus-api"
     ],
-    "net.java.dev.jna:jna-platform": [
-      "net.java.dev.jna:jna"
-    ],
+    "net.java.dev.jna:jna-platform": ["net.java.dev.jna:jna"],
     "net.logstash.logback:logstash-logback-encoder": [
       "com.fasterxml.jackson.core:jackson-databind"
     ],
@@ -1813,12 +1803,8 @@
     "org.jetbrains.kotlin:kotlin-reflect": [
       "org.jetbrains.kotlin:kotlin-stdlib"
     ],
-    "org.jetbrains.kotlin:kotlin-stdlib": [
-      "org.jetbrains:annotations"
-    ],
-    "org.jetbrains.kotlin:kotlin-test": [
-      "org.jetbrains.kotlin:kotlin-stdlib"
-    ],
+    "org.jetbrains.kotlin:kotlin-stdlib": ["org.jetbrains:annotations"],
+    "org.jetbrains.kotlin:kotlin-test": ["org.jetbrains.kotlin:kotlin-stdlib"],
     "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": [
       "org.jetbrains.kotlin:kotlin-stdlib",
       "org.jetbrains:annotations"
@@ -2019,9 +2005,7 @@
       "com.fasterxml.jackson.databind.util",
       "com.fasterxml.jackson.databind.util.internal"
     ],
-    "com.google.android:annotations": [
-      "android.annotation"
-    ],
+    "com.google.android:annotations": ["android.annotation"],
     "com.google.api-client:google-api-client": [
       "com.google.api.client.googleapis",
       "com.google.api.client.googleapis.apache.v2",
@@ -2116,9 +2100,7 @@
       "com.google.api.services.storage",
       "com.google.api.services.storage.model"
     ],
-    "com.google.auth:google-auth-library-credentials": [
-      "com.google.auth"
-    ],
+    "com.google.auth:google-auth-library-credentials": ["com.google.auth"],
     "com.google.auth:google-auth-library-oauth2-http": [
       "com.google.auth.http",
       "com.google.auth.oauth2"
@@ -2144,12 +2126,8 @@
       "com.google.cloud.spi",
       "com.google.cloud.testing"
     ],
-    "com.google.cloud:google-cloud-core-grpc": [
-      "com.google.cloud.grpc"
-    ],
-    "com.google.cloud:google-cloud-core-http": [
-      "com.google.cloud.http"
-    ],
+    "com.google.cloud:google-cloud-core-grpc": ["com.google.cloud.grpc"],
+    "com.google.cloud:google-cloud-core-http": ["com.google.cloud.http"],
     "com.google.cloud:google-cloud-firestore": [
       "com.google.cloud.firestore",
       "com.google.cloud.firestore.annotation",
@@ -2278,9 +2256,7 @@
     "com.google.http-client:google-http-client-jackson2": [
       "com.google.api.client.json.jackson2"
     ],
-    "com.google.j2objc:j2objc-annotations": [
-      "com.google.j2objc.annotations"
-    ],
+    "com.google.j2objc:j2objc-annotations": ["com.google.j2objc.annotations"],
     "com.google.oauth-client:google-oauth-client": [
       "com.google.api.client.auth.oauth",
       "com.google.api.client.auth.oauth2",
@@ -2290,12 +2266,8 @@
       "com.google.protobuf",
       "com.google.protobuf.compiler"
     ],
-    "com.google.protobuf:protobuf-java-util": [
-      "com.google.protobuf.util"
-    ],
-    "com.google.re2j:re2j": [
-      "com.google.re2j"
-    ],
+    "com.google.protobuf:protobuf-java-util": ["com.google.protobuf.util"],
+    "com.google.re2j:re2j": ["com.google.re2j"],
     "com.typesafe:config": [
       "com.typesafe.config",
       "com.typesafe.config.impl",
@@ -2314,29 +2286,13 @@
       "org.apache.commons.logging",
       "org.apache.commons.logging.impl"
     ],
-    "io.grpc:grpc-alts": [
-      "io.grpc.alts",
-      "io.grpc.alts.internal"
-    ],
-    "io.grpc:grpc-api": [
-      "io.grpc"
-    ],
-    "io.grpc:grpc-auth": [
-      "io.grpc.auth"
-    ],
-    "io.grpc:grpc-core": [
-      "io.grpc.internal"
-    ],
-    "io.grpc:grpc-googleapis": [
-      "io.grpc.googleapis"
-    ],
-    "io.grpc:grpc-grpclb": [
-      "io.grpc.grpclb",
-      "io.grpc.lb.v1"
-    ],
-    "io.grpc:grpc-inprocess": [
-      "io.grpc.inprocess"
-    ],
+    "io.grpc:grpc-alts": ["io.grpc.alts", "io.grpc.alts.internal"],
+    "io.grpc:grpc-api": ["io.grpc"],
+    "io.grpc:grpc-auth": ["io.grpc.auth"],
+    "io.grpc:grpc-core": ["io.grpc.internal"],
+    "io.grpc:grpc-googleapis": ["io.grpc.googleapis"],
+    "io.grpc:grpc-grpclb": ["io.grpc.grpclb", "io.grpc.lb.v1"],
+    "io.grpc:grpc-inprocess": ["io.grpc.inprocess"],
     "io.grpc:grpc-netty-shaded": [
       "io.grpc.netty.shaded.io.grpc.netty",
       "io.grpc.netty.shaded.io.netty.bootstrap",
@@ -2408,16 +2364,9 @@
       "io.grpc.opentelemetry",
       "io.grpc.opentelemetry.internal"
     ],
-    "io.grpc:grpc-protobuf": [
-      "io.grpc.protobuf"
-    ],
-    "io.grpc:grpc-protobuf-lite": [
-      "io.grpc.protobuf.lite"
-    ],
-    "io.grpc:grpc-rls": [
-      "io.grpc.lookup.v1",
-      "io.grpc.rls"
-    ],
+    "io.grpc:grpc-protobuf": ["io.grpc.protobuf"],
+    "io.grpc:grpc-protobuf-lite": ["io.grpc.protobuf.lite"],
+    "io.grpc:grpc-rls": ["io.grpc.lookup.v1", "io.grpc.rls"],
     "io.grpc:grpc-services": [
       "io.grpc.binarylog.v1",
       "io.grpc.channelz.v1",
@@ -2428,13 +2377,8 @@
       "io.grpc.reflection.v1alpha",
       "io.grpc.services"
     ],
-    "io.grpc:grpc-stub": [
-      "io.grpc.stub",
-      "io.grpc.stub.annotations"
-    ],
-    "io.grpc:grpc-util": [
-      "io.grpc.util"
-    ],
+    "io.grpc:grpc-stub": ["io.grpc.stub", "io.grpc.stub.annotations"],
+    "io.grpc:grpc-util": ["io.grpc.util"],
     "io.grpc:grpc-xds": [
       "io.grpc.xds",
       "io.grpc.xds.client",
@@ -2494,9 +2438,7 @@
       "io.grpc.xds.shaded.udpa.annotations",
       "io.grpc.xds.shaded.xds.annotations.v3"
     ],
-    "io.ktor:ktor-client-apache-jvm": [
-      "io.ktor.client.engine.apache"
-    ],
+    "io.ktor:ktor-client-apache-jvm": ["io.ktor.client.engine.apache"],
     "io.ktor:ktor-client-cio-jvm": [
       "io.ktor.client.engine.cio",
       "io.ktor.client.plugins.websocket.cio"
@@ -2524,9 +2466,7 @@
       "io.ktor.client.statement",
       "io.ktor.client.utils"
     ],
-    "io.ktor:ktor-events-jvm": [
-      "io.ktor.events"
-    ],
+    "io.ktor:ktor-events-jvm": ["io.ktor.events"],
     "io.ktor:ktor-http-cio-jvm": [
       "io.ktor.http.cio",
       "io.ktor.http.cio.internals"
@@ -2568,15 +2508,11 @@
       "io.ktor.network.tls.extensions",
       "io.ktor.network.tls.platform"
     ],
-    "io.ktor:ktor-serialization-jvm": [
-      "io.ktor.serialization"
-    ],
+    "io.ktor:ktor-serialization-jvm": ["io.ktor.serialization"],
     "io.ktor:ktor-serialization-kotlinx-json-jvm": [
       "io.ktor.serialization.kotlinx.json"
     ],
-    "io.ktor:ktor-serialization-kotlinx-jvm": [
-      "io.ktor.serialization.kotlinx"
-    ],
+    "io.ktor:ktor-serialization-kotlinx-jvm": ["io.ktor.serialization.kotlinx"],
     "io.ktor:ktor-server-call-logging-jvm": [
       "io.ktor.server.plugins.calllogging"
     ],
@@ -2614,15 +2550,9 @@
       "io.ktor.server.testing.client",
       "io.ktor.server.testing.internal"
     ],
-    "io.ktor:ktor-server-websockets-jvm": [
-      "io.ktor.server.websocket"
-    ],
-    "io.ktor:ktor-sse-jvm": [
-      "io.ktor.sse"
-    ],
-    "io.ktor:ktor-test-dispatcher-jvm": [
-      "io.ktor.test.dispatcher"
-    ],
+    "io.ktor:ktor-server-websockets-jvm": ["io.ktor.server.websocket"],
+    "io.ktor:ktor-sse-jvm": ["io.ktor.sse"],
+    "io.ktor:ktor-test-dispatcher-jvm": ["io.ktor.test.dispatcher"],
     "io.ktor:ktor-utils-jvm": [
       "io.ktor.util",
       "io.ktor.util.cio",
@@ -2644,10 +2574,7 @@
       "io.ktor.websocket",
       "io.ktor.websocket.internals"
     ],
-    "io.netty:netty-buffer": [
-      "io.netty.buffer",
-      "io.netty.buffer.search"
-    ],
+    "io.netty:netty-buffer": ["io.netty.buffer", "io.netty.buffer.search"],
     "io.netty:netty-codec": [
       "io.netty.handler.codec",
       "io.netty.handler.codec.base64",
@@ -2671,9 +2598,7 @@
       "io.netty.handler.codec.rtsp",
       "io.netty.handler.codec.spdy"
     ],
-    "io.netty:netty-codec-http2": [
-      "io.netty.handler.codec.http2"
-    ],
+    "io.netty:netty-codec-http2": ["io.netty.handler.codec.http2"],
     "io.netty:netty-common": [
       "io.netty.util",
       "io.netty.util.collection",
@@ -2703,9 +2628,7 @@
       "io.netty.handler.timeout",
       "io.netty.handler.traffic"
     ],
-    "io.netty:netty-resolver": [
-      "io.netty.resolver"
-    ],
+    "io.netty:netty-resolver": ["io.netty.resolver"],
     "io.netty:netty-transport": [
       "io.netty.bootstrap",
       "io.netty.channel",
@@ -2720,15 +2643,9 @@
       "io.netty.channel.socket.nio",
       "io.netty.channel.socket.oio"
     ],
-    "io.netty:netty-transport-classes-epoll": [
-      "io.netty.channel.epoll"
-    ],
-    "io.netty:netty-transport-classes-kqueue": [
-      "io.netty.channel.kqueue"
-    ],
-    "io.netty:netty-transport-native-unix-common": [
-      "io.netty.channel.unix"
-    ],
+    "io.netty:netty-transport-classes-epoll": ["io.netty.channel.epoll"],
+    "io.netty:netty-transport-classes-kqueue": ["io.netty.channel.kqueue"],
+    "io.netty:netty-transport-native-unix-common": ["io.netty.channel.unix"],
     "io.opencensus:opencensus-api": [
       "io.opencensus.common",
       "io.opencensus.internal",
@@ -2828,9 +2745,7 @@
       "io.opentelemetry.extension.incubator.propagation",
       "io.opentelemetry.extension.incubator.trace"
     ],
-    "io.opentelemetry:opentelemetry-sdk": [
-      "io.opentelemetry.sdk"
-    ],
+    "io.opentelemetry:opentelemetry-sdk": ["io.opentelemetry.sdk"],
     "io.opentelemetry:opentelemetry-sdk-common": [
       "io.opentelemetry.sdk.common",
       "io.opentelemetry.sdk.common.export",
@@ -2881,9 +2796,7 @@
       "io.opentelemetry.sdk.trace.internal.data",
       "io.opentelemetry.sdk.trace.samplers"
     ],
-    "io.perfmark:perfmark-api": [
-      "io.perfmark"
-    ],
+    "io.perfmark:perfmark-api": ["io.perfmark"],
     "javax.annotation:javax.annotation-api": [
       "javax.annotation",
       "javax.annotation.security",
@@ -2927,9 +2840,7 @@
       "net.bytebuddy.utility.privilege",
       "net.bytebuddy.utility.visitor"
     ],
-    "net.bytebuddy:byte-buddy-agent": [
-      "net.bytebuddy.agent"
-    ],
+    "net.bytebuddy:byte-buddy-agent": ["net.bytebuddy.agent"],
     "net.java.dev.jna:jna": [
       "com.sun.jna",
       "com.sun.jna.internal",
@@ -3127,9 +3038,7 @@
       "org.apache.http.nio.reactor.ssl",
       "org.apache.http.nio.util"
     ],
-    "org.apiguardian:apiguardian-api": [
-      "org.apiguardian.api"
-    ],
+    "org.apiguardian:apiguardian-api": ["org.apiguardian.api"],
     "org.checkerframework:checker-qual": [
       "org.checkerframework.checker.builder.qual",
       "org.checkerframework.checker.calledmethods.qual",
@@ -3171,9 +3080,7 @@
       "org.conscrypt.ct",
       "org.conscrypt.io"
     ],
-    "org.eclipse.jetty.alpn:alpn-api": [
-      "org.eclipse.jetty.alpn"
-    ],
+    "org.eclipse.jetty.alpn:alpn-api": ["org.eclipse.jetty.alpn"],
     "org.fusesource.jansi:jansi": [
       "org.fusesource.jansi",
       "org.fusesource.jansi.internal",
@@ -3290,9 +3197,7 @@
       "kotlin.time.jdk8",
       "kotlin.uuid"
     ],
-    "org.jetbrains.kotlin:kotlin-test": [
-      "kotlin.test"
-    ],
+    "org.jetbrains.kotlin:kotlin-test": ["kotlin.test"],
     "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": [
       "_COROUTINE",
       "kotlinx.coroutines",
@@ -3476,9 +3381,7 @@
       "org.junit.platform.reporting.shadow.org.opentest4j.reporting.events.root",
       "org.junit.platform.reporting.shadow.org.opentest4j.reporting.schema"
     ],
-    "org.opentest4j:opentest4j": [
-      "org.opentest4j"
-    ],
+    "org.opentest4j:opentest4j": ["org.opentest4j"],
     "org.slf4j:slf4j-api": [
       "org.slf4j",
       "org.slf4j.event",
@@ -3727,9 +3630,7 @@
       ]
     },
     "io.grpc:grpc-rls": {
-      "io.grpc.LoadBalancerProvider": [
-        "io.grpc.rls.RlsLoadBalancerProvider"
-      ]
+      "io.grpc.LoadBalancerProvider": ["io.grpc.rls.RlsLoadBalancerProvider"]
     },
     "io.grpc:grpc-services": {
       "io.grpc.LoadBalancerProvider": [
@@ -3755,9 +3656,7 @@
         "io.grpc.xds.WeightedTargetLoadBalancerProvider",
         "io.grpc.xds.WrrLocalityLoadBalancerProvider"
       ],
-      "io.grpc.NameResolverProvider": [
-        "io.grpc.xds.XdsNameResolverProvider"
-      ],
+      "io.grpc.NameResolverProvider": ["io.grpc.xds.XdsNameResolverProvider"],
       "io.grpc.xds.XdsCredentialsProvider": [
         "io.grpc.xds.internal.GoogleDefaultXdsCredentialsProvider",
         "io.grpc.xds.internal.InsecureXdsCredentialsProvider",
