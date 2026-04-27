@@ -6,6 +6,8 @@ import io.ktor.server.application.ApplicationPlugin
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.response.respond
 import io.ktor.util.AttributeKey
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 
 val UidKey: AttributeKey<String> = AttributeKey("uid")
@@ -32,10 +34,10 @@ val FirebaseAuthPlugin: ApplicationPlugin<FirebaseAuthConfig> =
         }
 
         try {
-          val uid = pluginConfig.verifier.verify(token)
+          val uid = withContext(Dispatchers.IO) { pluginConfig.verifier.verify(token) }
           call.attributes.put(UidKey, uid)
         } catch (e: Exception) {
-          logger.warn("Token verification failed: ${e.message}")
+          logger.warn("Token verification failed", e)
           call.respond(HttpStatusCode.Unauthorized)
         }
       }
