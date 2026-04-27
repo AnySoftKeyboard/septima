@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -16,10 +17,8 @@ jobs:
           fetch-depth: 0 # Important: fetch all history for diffing
 
       - name: Run Cassandra AI Review
-        uses: menny/cassandra@c31e5c67624ca33ee7094b567e4d14a96639fe8b
+        uses: menny/cassandra@v0.2.0
         with:
-          provider: 'google'
-          model_id: 'gemini-3-flash-preview'
           provider_api_key: ${{ secrets.GEMINI_API_KEY }}
           # The base branch to compare against (defaults to main)
           base: ${{ github.event.pull_request.base.sha }}
