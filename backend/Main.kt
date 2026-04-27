@@ -12,31 +12,23 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 
 fun main() {
-    val projectId =
-        requireNotNull(System.getenv("GOOGLE_CLOUD_PROJECT")) {
-            "GOOGLE_CLOUD_PROJECT env var is required"
-        }
-    if (FirebaseApp.getApps().isEmpty()) {
-        FirebaseApp.initializeApp(
-            FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.getApplicationDefault())
-                .setProjectId(projectId)
-                .build(),
-        )
-    }
-    val port = System.getenv("PORT")?.toInt() ?: 8080
-    embeddedServer(Netty, port = port) {
-        configureServer(FirebaseTokenVerifier())
-    }.start(wait = true)
+  val projectId =
+      requireNotNull(System.getenv("GOOGLE_CLOUD_PROJECT")) {
+        "GOOGLE_CLOUD_PROJECT env var is required"
+      }
+  if (FirebaseApp.getApps().isEmpty()) {
+    FirebaseApp.initializeApp(
+        FirebaseOptions.builder()
+            .setCredentials(GoogleCredentials.getApplicationDefault())
+            .setProjectId(projectId)
+            .build(),
+    )
+  }
+  val port = System.getenv("PORT")?.toInt() ?: 8080
+  embeddedServer(Netty, port = port) { configureServer(FirebaseTokenVerifier()) }.start(wait = true)
 }
 
 fun Application.configureServer(verifier: TokenVerifier) {
-    install(FirebaseAuthPlugin) {
-        this.verifier = verifier
-    }
-    routing {
-        post("/ping") {
-            call.respondText(call.attributes[UidKey])
-        }
-    }
+  install(FirebaseAuthPlugin) { this.verifier = verifier }
+  routing { post("/ping") { call.respondText(call.attributes[UidKey]) } }
 }
