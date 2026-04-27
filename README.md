@@ -42,16 +42,17 @@ Septima is a Bazel-managed polyglot monorepo. **Bazel is the single entry point 
 - **JDK 21+** — Bazel uses an embedded JDK for the build itself, but a host JDK is needed for IDE integration (IntelliJ / Kotlin LSP).
 - **Node.js 24+** — Bazel ships its own Node toolchain (`MODULE.bazel`), so a host install is needed only for editor TypeScript support.
 - **pnpm 10+** — used **only** to regenerate `pnpm-lock.yaml`. Never used to install or run app code.
-- **Firebase CLI** (`npm i -g firebase-tools`) — required for the local emulator suite (Firestore + Cloud Storage). Not yet wired up; dev server targets will fail without it once the backend and frontend servers land.
-- **Google Cloud SDK** (`gcloud`) — only needed for production deploys; not required for local dev.
+- **Firebase CLI** (`npm i -g firebase-tools`) — runs the local Auth emulator. Required to run the backend dev server.
+- **Google Cloud SDK** (`gcloud`) — needed once to authenticate for Application Default Credentials (`gcloud auth application-default login`). Also required for production deploys.
 
 ### First-time setup
 
 ```sh
 git clone <repo>
 cd septima
-bazel build //...   # warms caches, fetches toolchains
-bazel test //...    # confirms the suite is green
+gcloud auth application-default login   # one-time: provides ADC for the backend
+bazel build //...                        # warms caches, fetches toolchains
+bazel test //...                         # confirms the suite is green
 ```
 
 ### Everyday commands
@@ -69,17 +70,19 @@ bazel test //...    # confirms the suite is green
 The dev loop runs entirely against the Firebase Emulator Suite to avoid touching production data or incurring cloud costs (see `docs/DESIGN-BUILD.md`).
 
 ```sh
-# Terminal 1 — Firestore + Cloud Storage emulators
+# Terminal 1 — Firebase Auth emulator (UI at http://localhost:4000)
 firebase emulators:start
 
-# Terminal 2 — Kotlin backend (Ktor on Cloud Run-style port)
+# Terminal 2 — Kotlin backend (Ktor on :8080)
+GOOGLE_CLOUD_PROJECT=septima-dev \
+FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 \
 bazel run //backend:dev_server
 
-# Terminal 3 — Vite-powered React frontend
+# Terminal 3 — Vite-powered React frontend (not yet implemented)
 bazel run //frontend:dev_server
 ```
 
-> The `//backend:dev_server` and `//frontend:dev_server` targets are not yet implemented. Until they land, only the test and format targets above are available.
+> `//frontend:dev_server` is not yet implemented. Until it lands, only the backend and test targets above are available.
 
 ### Updating dependencies
 
