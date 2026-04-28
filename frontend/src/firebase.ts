@@ -1,8 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 
-function requireEnv(key: string): string {
-  const value = import.meta.env[key];
+function requireEnv(key: string, value: string | undefined): string {
   if (!value)
     throw new Error(
       `Missing required env var: ${key}. Copy frontend/.env.local.example to frontend/.env.local and fill in the values.`,
@@ -11,9 +10,18 @@ function requireEnv(key: string): string {
 }
 
 const firebaseConfig = {
-  apiKey: requireEnv('VITE_FIREBASE_API_KEY'),
-  authDomain: requireEnv('VITE_FIREBASE_AUTH_DOMAIN'),
-  projectId: requireEnv('VITE_FIREBASE_PROJECT_ID'),
+  apiKey: requireEnv(
+    'VITE_FIREBASE_API_KEY',
+    import.meta.env.VITE_FIREBASE_API_KEY,
+  ),
+  authDomain: requireEnv(
+    'VITE_FIREBASE_AUTH_DOMAIN',
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  ),
+  projectId: requireEnv(
+    'VITE_FIREBASE_PROJECT_ID',
+    import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  ),
 };
 
 export const app = initializeApp(firebaseConfig);
