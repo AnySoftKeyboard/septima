@@ -4,6 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 java_binary(
     name = "ktfmt",
+    args = ["--google-style"],
     main_class = "com.facebook.ktfmt.cli.Main",
     runtime_deps = ["@ktfmt//jar"],
 )
