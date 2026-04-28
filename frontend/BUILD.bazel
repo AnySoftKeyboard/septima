@@ -1,11 +1,15 @@
 load("@aspect_rules_js//js:defs.bzl", "js_test")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@npm_rulesjs//:vite/package_json.bzl", vite_bin = "bin")
 
 ts_project(
     name = "frontend",
     srcs = glob(
         ["*.ts"],
-        exclude = ["*.test.ts"],
+        exclude = [
+            "*.test.ts",
+            "vite.config.ts",
+        ],
     ),
     declaration = True,
     transpiler = "tsc",
@@ -14,16 +18,64 @@ ts_project(
 )
 
 ts_project(
+    name = "frontend_lib",
+    srcs = glob(
+        [
+            "src/**/*.ts",
+            "src/**/*.tsx",
+        ],
+        exclude = ["src/**/*.test.*"],
+    ),
+    declaration = True,
+    transpiler = "tsc",
+    tsconfig = "tsconfig.json",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:node_modules/@types/react",
+        "//:node_modules/@types/react-dom",
+        "//:node_modules/firebase",
+        "//:node_modules/react",
+        "//:node_modules/react-dom",
+        "//:node_modules/vite",
+    ],
+)
+
+ts_project(
     name = "tests_lib",
     srcs = ["index.test.ts"],
     declaration = True,
     transpiler = "tsc",
     tsconfig = "tsconfig.json",
-    deps = ["//:node_modules/@types/node"],
+    deps = [
+        ":frontend_lib",
+        "//:node_modules/@types/node",
+    ],
 )
 
 js_test(
     name = "test",
-    data = [":tests_lib"],
+    data = [
+        ":frontend_lib",
+        ":tests_lib",
+    ],
     entry_point = "index.test.js",
+)
+
+vite_bin.vite_binary(
+    name = "dev_server",
+    args = [
+        "--port=5173",
+        "--host",
+    ],
+    chdir = package_name(),
+    data = [
+        "index.html",
+        "tsconfig.json",
+        "vite.config.ts",
+        ":frontend_lib",
+        "//:node_modules/@vitejs/plugin-react",
+        "//:node_modules/firebase",
+        "//:node_modules/react",
+        "//:node_modules/react-dom",
+    ] + glob(["src/**"]),
 )
