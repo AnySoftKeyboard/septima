@@ -20,13 +20,8 @@ export function createApiClient(
           `HTTP ${response.status}${detail ? `: ${detail}` : ''}`,
         );
       }
-      if (
-        response.status === 204 ||
-        response.headers.get('content-length') === '0'
-      ) {
-        return undefined as T;
-      }
-      return response.json() as Promise<T>;
+      const text = await response.text();
+      return (text ? JSON.parse(text) : undefined) as T;
     },
   };
 }
