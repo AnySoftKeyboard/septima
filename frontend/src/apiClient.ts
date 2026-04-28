@@ -6,7 +6,7 @@ export function createApiClient(
   return {
     async post<T>(path: string, body?: unknown): Promise<T> {
       const token = await getToken();
-      const response = await fetcher(`${baseUrl}${path}`, {
+      const response = await fetcher(new URL(path, baseUrl).toString(), {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
