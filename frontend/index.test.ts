@@ -48,7 +48,7 @@ test('sends POST to the correct URL', async () => {
   assert.strictEqual(capturedUrl, 'http://localhost:8080/ping');
 });
 
-test('throws on non-ok response', async () => {
+test('throws on non-ok response with status code', async () => {
   const mockFetch = async (): Promise<Response> =>
     new Response('', { status: 401 });
   const client = createApiClient(
@@ -63,4 +63,33 @@ test('throws on non-ok response', async () => {
       return true;
     },
   );
+});
+
+test('includes server error body in thrown error', async () => {
+  const mockFetch = async (): Promise<Response> =>
+    new Response('Unauthorized: token expired', { status: 401 });
+  const client = createApiClient(
+    async () => 'token',
+    'http://localhost:8080',
+    mockFetch as typeof fetch,
+  );
+  await assert.rejects(
+    () => client.post('/ping'),
+    (err: Error) => {
+      assert.match(err.message, /token expired/);
+      return true;
+    },
+  );
+});
+
+test('returns undefined for 204 No Content', async () => {
+  const mockFetch = async (): Promise<Response> =>
+    new Response(null, { status: 204 });
+  const client = createApiClient(
+    async () => 'token',
+    'http://localhost:8080',
+    mockFetch as typeof fetch,
+  );
+  const result = await client.post('/trigger');
+  assert.strictEqual(result, undefined);
 });

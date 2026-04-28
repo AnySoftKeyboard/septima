@@ -14,7 +14,18 @@ export function createApiClient(
         },
         body: body != null ? JSON.stringify(body) : undefined,
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) {
+        const detail = await response.text().catch(() => '');
+        throw new Error(
+          `HTTP ${response.status}${detail ? `: ${detail}` : ''}`,
+        );
+      }
+      if (
+        response.status === 204 ||
+        response.headers.get('content-length') === '0'
+      ) {
+        return undefined as T;
+      }
       return response.json() as Promise<T>;
     },
   };
