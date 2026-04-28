@@ -78,11 +78,11 @@ GOOGLE_CLOUD_PROJECT=septima-dev \
 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 \
 bazel run //backend:dev_server
 
-# Terminal 3 — Vite-powered React frontend (not yet implemented)
+# Terminal 3 — Vite-powered React frontend (http://localhost:5173)
 bazel run //frontend:dev_server
 ```
 
-> `//frontend:dev_server` is not yet implemented. Until it lands, only the backend and test targets above are available.
+> Copy `frontend/.env.local.example` to `frontend/.env.local` and fill in the Firebase config values before running the frontend dev server.
 
 ### Updating dependencies
 
