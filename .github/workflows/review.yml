@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0 # Important: fetch all history for diffing
 
       - name: Run Cassandra AI Review
-        uses: menny/cassandra@v0.2.0
+        uses: menny/cassandra@v0.3.0
         with:
           reviewer_github_token: ${{ secrets.AI_CODE_REVIEW_GH_TOKEN }}
           provider_api_key: ${{ secrets.GEMINI_API_KEY }}
