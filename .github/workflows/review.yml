@@ -19,6 +19,7 @@ jobs:
       - name: Run Cassandra AI Review
         uses: menny/cassandra@v0.2.0
         with:
+          reviewer_github_token: ${{ secrets.CODE_REVIEW_BOT_TOKEN }}
           provider_api_key: ${{ secrets.GEMINI_API_KEY }}
           # The base branch to compare against (defaults to main)
           base: ${{ github.event.pull_request.base.sha }}
